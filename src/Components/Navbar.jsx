@@ -1,39 +1,64 @@
+import { useState } from "react"
 
-const Navbar = ({setCategory}) => {
+const CATEGORIES = ["general", "technology", "business", "health", "sports", "entertainment"]
+
+const Navbar = ({ setCategory, activeCategory, darkMode, setDarkMode, setSearchQuery }) => {
+  const [searchVal, setSearchVal] = useState("")
+
+  const handleSearch = (e) => {
+    const val = e.target.value
+    setSearchVal(val)
+    setSearchQuery(val)
+  }
+
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-  <div className="container-fluid">
-    <a className="navbar-brand" href="#"><span className="badge bg-light text-dark fs-4">NewsLine</span></a>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarNav">
-      <ul className="navbar-nav">
-        
-        <li className="nav-item">
-          <div className="nav-link" onClick={()=>setCategory("technology")}>Technology</div>
-        </li>
+    <nav className="navbar">
+      <div className="navbar-inner">
+        {/* Brand */}
+        <a className="brand" href="#">
+          Quick<span>News</span>
+        </a>
 
-        <li className="nav-item">
-          <div className="nav-link" onClick={()=>setCategory("business")} >Business</div>
-        </li>
+        {/* Search */}
+        <div className="search-wrapper">
+          <span className="search-icon">🔍</span>
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search headlines..."
+            value={searchVal}
+            onChange={handleSearch}
+          />
+        </div>
 
-        <li className="nav-item">
-          <div className="nav-link" onClick={()=>setCategory("health")} >Health</div>
-        </li>
+        {/* Theme Toggle */}
+        <button
+          className="theme-toggle"
+          onClick={() => setDarkMode(!darkMode)}
+          title={darkMode ? "Switch to light" : "Switch to dark"}
+        >
+          {darkMode ? "☀️" : "🌙"}
+        </button>
 
-        <li className="nav-item">
-          <div className="nav-link" onClick={()=>setCategory("sports")}>Sports</div>
-        </li>
-
-        <li className="nav-item">
-          <div className="nav-link" onClick={()=>setCategory("entertainment")}>Entertainment</div>
-        </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+        {/* Categories */}
+        <ul className="nav-categories">
+          {CATEGORIES.map(cat => (
+            <li key={cat}>
+              <button
+                className={activeCategory === cat ? "active" : ""}
+                onClick={() => {
+                  setCategory(cat)
+                  setSearchQuery("")
+                  setSearchVal("")
+                }}
+              >
+                {cat}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
   )
 }
 
