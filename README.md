@@ -29,7 +29,7 @@ Make sure you have the following software installed on your machine:
 
 3. **Navigate to the project directory** using your terminal or command prompt:
    ```sh
-   cd path/to/news-app-directory
+   cd Quick-News
    ```
 
 4. **Install the necessary dependencies** by running the following command:
