@@ -15,28 +15,28 @@ const NewsBoard = ({ category, searchQuery }) => {
     setLoading(true)
     setError(null)
 
-    const base = `/api/v2/top-headlines`
     const params = new URLSearchParams({
-      country: "us",
       category,
-      pageSize: PAGE_SIZE,
+      lang: "en",
+      country: "in",
+      max: PAGE_SIZE,
       page,
-      apiKey: import.meta.env.VITE_API_KEY,
+      apikey: import.meta.env.VITE_API_KEY,
     })
 
     if (searchQuery) {
       params.set("q", searchQuery)
     }
 
-    fetch(`${base}?${params}`)
+    fetch(`https://gnews.io/api/v4/top-headlines?${params}`)
       .then(res => {
         if (!res.ok) throw new Error(`HTTP error ${res.status}`)
         return res.json()
       })
       .then(data => {
-        if (data.status === "error") throw new Error(data.message)
-        setArticles(data.articles?.filter(a => a.title !== "[Removed]") || [])
-        setTotalResults(data.totalResults || 0)
+        if (data.errors) throw new Error(data.errors.join(", "))
+        setArticles(data.articles || [])
+        setTotalResults(data.totalArticles || 0)
       })
       .catch(err => {
         console.error(err)
@@ -45,7 +45,6 @@ const NewsBoard = ({ category, searchQuery }) => {
       .finally(() => setLoading(false))
   }, [category, searchQuery, page])
 
-  // Reset page when category or search changes
   useEffect(() => {
     setPage(1)
   }, [category, searchQuery])
@@ -63,7 +62,6 @@ const NewsBoard = ({ category, searchQuery }) => {
 
   return (
     <main className="main-content">
-      {/* Header */}
       <div className="content-header">
         <h1 className="content-title">
           <em>{getCategoryTitle()}</em> Headlines
@@ -75,7 +73,6 @@ const NewsBoard = ({ category, searchQuery }) => {
         )}
       </div>
 
-      {/* Grid */}
       <div className="news-grid">
         {loading ? (
           Array.from({ length: PAGE_SIZE }).map((_, i) => (
@@ -98,7 +95,7 @@ const NewsBoard = ({ category, searchQuery }) => {
               key={index}
               title={news.title}
               description={news.description}
-              src={news.urlToImage}
+              src={news.image}
               url={news.url}
               source={news.source?.name}
               publishedAt={news.publishedAt}
@@ -108,7 +105,6 @@ const NewsBoard = ({ category, searchQuery }) => {
         )}
       </div>
 
-      {/* Pagination */}
       {!loading && !error && totalPages > 1 && (
         <div className="pagination">
           <button

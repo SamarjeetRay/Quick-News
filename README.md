@@ -1,79 +1,134 @@
+# Quick News ⚡
 
-## Introduction
+A responsive React news application built with **Vite** and styled with custom CSS. Fetches real-time headlines using the **GNews API** with category-based navigation, search, dark/light mode, skeleton loading, and pagination.
 
-Welcome to the News App, a modern and user-friendly application built using React JS and Bootstrap. This app is designed to provide you with the latest news articles from various sources in a seamless and intuitive manner. Whether you are interested in technology, sports, health, business or entertainment, our News App has you covered with up-to-date information and a sleek, responsive design.
+## Live Demo
 
-### Key Features
+🔗 [quick-news-live.vercel.app](https://quick-news-live.vercel.app)
 
-- **Real-Time News Updates:** Stay informed with the latest headlines and stories as they happen.
-- **User-Friendly Interface:** Navigate through news categories effortlessly with our clean and intuitive UI.
-- **Responsive Design:** Enjoy a seamless experience on any device, whether it’s a desktop, tablet, or mobile phone.
+---
+
+## Features
+
+- **Real-Time Headlines** — powered by GNews API, works in both local and production environments
+- **Category Navigation** — General, Technology, Business, Health, Sports, Entertainment
+- **Search** — live search across headlines
+- **Dark / Light Mode** — toggle with persistent UI state
+- **Skeleton Loading** — smooth loading placeholders
+- **Pagination** — browse multiple pages of results
+- **Responsive Design** — works on desktop, tablet, and mobile
+- **Fallback Images** — broken images gracefully replaced with a placeholder
+
+---
+
+## Tech Stack
+
+- [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- Custom CSS (no Bootstrap dependency)
+- [GNews API](https://gnews.io/) for news data
 
 ---
 
 ## Getting Started
 
-To get started with the News App, follow these simple steps:
-
 ### Prerequisites
 
-Make sure you have the following software installed on your machine:
-
-- [Node.js](https://nodejs.org/) (which includes npm)
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
 
 ### Installation
 
-1. **Download the News App source code.**
+1. **Clone or download** this repository.
 
-2. **Extract the contents** of the downloaded zip file.
-
-3. **Navigate to the project directory** using your terminal or command prompt:
+2. **Navigate to the project directory:**
    ```sh
    cd Quick-News
    ```
 
-4. **Install the necessary dependencies** by running the following command:
+3. **Install dependencies:**
    ```sh
    npm install
    ```
 
-### Running the App
+### Configure GNews API
 
-After installing the dependencies, you can start the development server:
+This app uses [GNews API](https://gnews.io/) — unlike NewsAPI, GNews works on deployed/production sites on the free tier.
 
-1. **Start the development server** by running:
+1. Sign up at [gnews.io](https://gnews.io) and grab your free API key.
+
+2. Create a `.env` file in the root of the project:
    ```sh
-   npm run dev
+   touch .env
    ```
 
-2. **Open your web browser** and navigate to `http://localhost:5173/` to view the News App.
-
-### Configuring NewsAPI
-
-The News App uses [NewsAPI](https://newsapi.org/) to fetch the latest news articles. To configure the API:
-
-1. **Sign up** at [NewsAPI](https://newsapi.org/) and get your API key.
-
-2. **Create a `.env` file** in the root directory of the project.
-
-3. **Add your API key** to the `.env` file:
+3. Add your key:
    ```env
-   VITE_API_KEY=your_news_api_key
+   VITE_API_KEY=your_gnews_api_key_here
    ```
 
-4. **Save the `.env` file** and restart the development server if it's running.
+4. Save and start the dev server.
+
+> **Note:** Never commit your `.env` file. It's already listed in `.gitignore`.
+
+### Run Locally
+
+```sh
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
+## Deploying to Vercel
 
+This project includes a `vercel.json` and is ready to deploy.
 
-# React + Vite
+1. Push your code to GitHub.
+2. Import the repo on [vercel.com](https://vercel.com).
+3. In the Vercel dashboard, go to **Settings → Environment Variables** and add:
+   ```
+   VITE_API_KEY = your_gnews_api_key_here
+   ```
+4. Deploy — it works out of the box on the free GNews tier.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Why GNews instead of NewsAPI?** NewsAPI's free plan blocks requests from non-localhost domains. GNews allows production deployments on the free tier (100 requests/day).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-"# News-App-using-React-JS-and-Bootstrap" 
+## Project Structure
 
+```
+Quick-News/
+├── src/
+│   ├── Components/
+│   │   ├── Navbar.jsx        # Navigation, search, theme toggle
+│   │   ├── NewsBoard.jsx     # Fetches & displays articles grid
+│   │   ├── NewsItem.jsx      # Individual news card
+│   │   └── SkeletonCard.jsx  # Loading placeholder
+│   ├── assets/
+│   │   └── image.png         # Fallback image for broken article images
+│   ├── App.jsx
+│   ├── App.css               # All styles + dark/light theme variables
+│   └── main.jsx
+├── .env                      # Your API key (not committed)
+├── vite.config.js            # Dev proxy config for GNews
+└── vercel.json               # Vercel deployment config
+```
+
+---
+
+## GNews API Reference
+
+| Feature | GNews Free Tier |
+|---|---|
+| Requests/day | 100 |
+| Works on deployed sites | ✅ Yes |
+| Categories supported | general, technology, business, health, sports, entertainment |
+| Image field | `article.image` |
+| Total count field | `data.totalArticles` |
+
+---
+
+## License
+
+MIT — feel free to use, modify, and share.
