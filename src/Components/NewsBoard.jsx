@@ -21,14 +21,11 @@ const NewsBoard = ({ category, searchQuery }) => {
       country: "in",
       max: PAGE_SIZE,
       page,
-      apikey: import.meta.env.VITE_API_KEY,
     })
 
-    if (searchQuery) {
-      params.set("q", searchQuery)
-    }
+    if (searchQuery) params.set("q", searchQuery)
 
-    fetch(`https://gnews.io/api/v4/top-headlines?${params}`)
+    fetch(`/api/news?${params}`)
       .then(res => {
         if (!res.ok) throw new Error(`HTTP error ${res.status}`)
         return res.json()
