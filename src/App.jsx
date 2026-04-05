@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Navbar from "./Components/Navbar"
 import NewsBoard from "./Components/NewsBoard"
+import Footer from "./Components/Footer"
 import "./App.css"
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         searchQuery={searchQuery}
         darkMode={darkMode}
       />
+      <Footer />
     </div>
   )
 }
