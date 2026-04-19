@@ -2,7 +2,7 @@
 
 A fast, responsive news web app built with **React + Vite**, delivering real-time headlines with a clean UI and installable PWA experience.
 
-🔗 **Live Demo:** https://dailyquicknews.vercel.app
+🔗 **Live Demo:** https://getquicknews.vercel.app
 
 ---
 
